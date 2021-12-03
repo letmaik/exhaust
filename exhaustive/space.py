@@ -4,19 +4,19 @@ class SpaceExhausted(Exception):
 class Space:
     def __init__(self, verbose=False):
         self.verbose = verbose
-        self.stack = []
+        self.stack_values = []
+        self.stack_labels = []
         self.loc = -1
         self.exhausted = False
 
     def rewind(self):
         self.loc = -1
+        self.stack_labels.clear()
 
-    def choice(self, seq, name=None):
+    def choice(self, seq, label=None):
         if self.exhausted:
             raise SpaceExhausted()
-        if self.verbose and name is None:
-            name = '<unnamed>'
-        top = len(self.stack) - 1
+        top = len(self.stack_values) - 1
         self.loc += 1
         if self.verbose:
             print(f'loc={self.loc}')
@@ -24,20 +24,20 @@ class Space:
             # Enter a new branch.
             seq = list(seq)
             assert len(seq) > 0
-            self.stack.append(seq)
+            self.stack_values.append(seq)
         else:
             # Check if rest of stack has been exhausted.
             is_exhausted = True
             for loc in range(self.loc + 1, top + 1):
-                if len(self.stack[loc]) > 1:
+                if len(self.stack_values[loc]) > 1:
                     is_exhausted = False
                     break
             # If so, pop the stack and continue with the next branch if any.
             # Otherwise, continue with the current branch.
             if is_exhausted:
-                self.stack = self.stack[:self.loc+1]
-                self.stack[self.loc].pop(0)
-                if len(self.stack[self.loc]) == 0:
+                self.stack_values = self.stack_values[:self.loc+1]
+                self.stack_values[self.loc].pop(0)
+                if len(self.stack_values[self.loc]) == 0:
                     if self.verbose:
                         print(f'Space exhausted')
                     self.exhausted = True
@@ -45,25 +45,35 @@ class Space:
                 else:
                     if self.verbose:
                         print(f'Branch exhausted')
-        value = self.stack[self.loc][0]
+        value = self.stack_values[self.loc][0]
+        if callable(label):
+            label = label(value)
+        self.stack_labels.append(label)
         if self.verbose:
-            print(f'{name}={value}')
+            print(f'Label: {label}')
+            print(f'Value: {value}')
             print(f'Stack:')
-            for loc, branch in enumerate(self.stack):
+            for loc, branch in enumerate(self.stack_values):
                 print(f'  {loc}: {branch}')
         return value
 
-    def maybe(self, name=None):
-        return self.choice([True, False], name=name)
+    def maybe(self, label=None):
+        return self.choice([True, False], label=label)
         
-    def randint(self, start, end, name=None):
-        return self.choice(range(start, end + 1), name=name)
+    def randint(self, start, end, label=None):
+        return self.choice(range(start, end + 1), label=label)
 
-def iterate(fn, verbose=False):
+def iterate(fn, return_labels=False, verbose=False):
     space = Space(verbose=verbose)
     try:
         while True:
             space.rewind()
-            yield fn(space)
+            result = fn(space)
+            if return_labels:
+                labels = [label for label in space.stack_labels
+                          if label is not None]
+                yield result, labels
+            else:
+                yield result
     except SpaceExhausted:
         pass
