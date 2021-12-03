@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python: [3.7, 3.8, 3.9, 3.10]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python }}
+
+    - name: Install package
+      run: pip install .[test]
+
+    - name: Run tests
+      run: pytest
