@@ -4,7 +4,7 @@ __version__ = "1.0.0"
 
 from typing import (
     Callable, TypeVar, Iterable, Iterator,
-    Sequence, Optional, Union, List,
+    Sequence, Optional, Union, List, Set,
     overload
 )
 import itertools
@@ -90,7 +90,7 @@ class State:
         
         return self.choice(_choices(population, k))
 
-    def sample(self, population: Union[Sequence[T], set[T]], k: int) -> List[T]:
+    def sample(self, population: Union[Sequence[T], Set[T]], k: int) -> List[T]:
         """
         Return a ``k`` sized list of unique elements chosen from
         the ``population`` sequence or set.
