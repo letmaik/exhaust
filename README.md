@@ -2,7 +2,7 @@
 
 A Python library to exhaustively enumerate a combinatorial space represented by a function.
 
-The API is modelled after Python's [`random`](https://docs.python.org/3/library/random.html) module and should feel familiar. Some additional convenience functions were added to cover common cases, like `maybe()`.
+The [API](https://letmaik.github.io/exhaust) is modelled after Python's [`random`](https://docs.python.org/3/library/random.html) module and should feel familiar. An additional convenience function [`maybe()`](https://letmaik.github.io/exhaust/#exhaust.State.maybe) was added to cover a common case.
 
 If you're missing a function and the corresponding space can be enumerated feel free to open an issue. Any functions that generate [real-valued distributions](https://docs.python.org/3/library/random.html#real-valued-distributions) cannot be supported.
 
@@ -42,6 +42,8 @@ Each time a function from the `State` object is called (like `maybe()`), you can
 
 See the [examples/](examples/) folder for further examples that can be run on the command line.
 
+See the [API Documentation](https://letmaik.github.io/exhaust) for all available `State` functions.
+
 ## Install
 
 ```
@@ -53,8 +55,9 @@ pip install exhaust
 Requires pip >= 21.3
 
 ```
-pip install -e .[test]
+pip install -e .[test,docs]
 pytest
+sphinx-build -b html docs dist-docs
 ```
 
 ## Acknowledgments
