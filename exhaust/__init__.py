@@ -1,21 +1,19 @@
-"The exhaustive package"
+"The exhaust package"
 
 __version__ = "0.1.0"
 
 class SpaceExhausted(Exception):
     pass
 
-class Space:
+class State:
     def __init__(self, verbose=False):
         self.verbose = verbose
         self._stack = []
-        self._notes = []
         self._loc = -1
         self._exhausted = False
 
     def _rewind(self):
         self._loc = -1
-        self._notes.clear()
 
     def choice(self, seq):
         if self._exhausted:
@@ -64,33 +62,21 @@ class Space:
     def randint(self, start, end):
         return self.choice(range(start, end + 1))
 
-    def note(self, note):
-        self._notes.append(note)
-        if self.verbose:
-            print(f'Note: {note}')
-
 
 class SpaceIterable:
-    def __init__(self, fn, return_notes=False, verbose=False):
+    def __init__(self, fn, verbose=False):
         self.fn = fn
-        self.return_notes = return_notes
         self.verbose = verbose
 
     def __iter__(self):
-        space = Space(verbose=self.verbose)
+        state = State(verbose=self.verbose)
         try:
             while True:
-                space._rewind()
-                result = self.fn(space)
-                if self.return_notes:
-                    yield result, list(space._notes)
-                else:
-                    yield result
+                state._rewind()
+                yield self.fn(state)
         except SpaceExhausted:
             pass
 
 
-def iterate(fn, return_notes=False, verbose=False):
-    return SpaceIterable(fn, 
-        return_notes=return_notes,
-        verbose=verbose)
+def space(fn, verbose=False):
+    return SpaceIterable(fn, verbose=verbose)

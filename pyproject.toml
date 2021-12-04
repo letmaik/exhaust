@@ -3,7 +3,7 @@ requires = ["flit_core >=3.4,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "exhaustive"
+name = "exhaust"
 authors = [{name = "Maik Riechert", email = "maik.riechert@arcor.de"}]
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
@@ -11,7 +11,7 @@ dynamic = ["version", "description"]
 requires-python = ">=3.7"
 
 [project.urls]
-Source = "https://github.com/letmaik/exhaustive"
+Source = "https://github.com/letmaik/exhaust"
 
 [project.optional-dependencies]
 test = [

@@ -1,12 +1,14 @@
-import exhaustive
+# This example shows how a space can be modelled with loops.
 
-def generate_numbers(space: exhaustive.Space):
+import exhaust
+
+def generate_numbers(state: exhaust.State):
     numbers = []
     for _ in range(5):
-        numbers.append(space.randint(1, 5))
+        numbers.append(state.randint(1, 5))
     return numbers
 
-for numbers in exhaustive.iterate(generate_numbers):
+for numbers in exhaust.space(generate_numbers):
     print(numbers)
 
 # Output:

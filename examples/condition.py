@@ -1,9 +1,11 @@
-import exhaustive
+# This example shows how conditions can be used to model dependencies.
 
-def generate_computer(space: exhaustive.Space):
-    has_dedicated_gpu = space.maybe()
+import exhaust
+
+def generate_computer(state: exhaust.State):
+    has_dedicated_gpu = state.maybe()
     if has_dedicated_gpu:
-        gpu_vendor = space.choice(["nvidia", "amd"])
+        gpu_vendor = state.choice(["nvidia", "amd"])
     else:
         gpu_vendor = "intel"
     return {
@@ -11,7 +13,7 @@ def generate_computer(space: exhaustive.Space):
         "gpu_vendor": gpu_vendor
     }
 
-for computer in exhaustive.iterate(generate_computer):
+for computer in exhaust.space(generate_computer):
     print(computer)
 
 # Output:

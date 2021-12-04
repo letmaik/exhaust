@@ -1,29 +1,29 @@
-# exhaustive
+# exhaust
 
-A Python library to exhaustively iterate a search space represented by a function.
+A Python library to exhaustively enumerate a combinatorial space represented by a function.
 
 The API is modelled after Python's [`random`](https://docs.python.org/3/library/random.html) module and should feel familiar. Some additional convenience functions were added to cover common cases, like `maybe()`.
 
-If you're missing a function and the corresponding space can be iterated feel free to open an issue. Any functions that generate [real-valued distributions](https://docs.python.org/3/library/random.html#real-valued-distributions) cannot be supported.
+If you're missing a function and the corresponding space can be enumerated feel free to open an issue. Any functions that generate [real-valued distributions](https://docs.python.org/3/library/random.html#real-valued-distributions) cannot be supported.
 
 ## Example
 
 ```py
-import exhaustive
+import exhaust
 
-def generate_character(space: exhaustive.Space):
+def generate_character(state: exhaust.State):
     eyes = []
-    for _ in range(space.randint(1, 3)):
+    for _ in range(state.randint(1, 3)):
         eyes.append({
-            'color': space.choice(['brown', 'blue']),
-            'glowing': space.maybe()
+            'color': state.choice(['brown', 'blue']),
+            'glowing': state.maybe()
         })
     size = 'giant' if len(eyes) == 1 else 'normal'
     accessories = []
     if len(eyes) == 2:
-        if space.maybe():
+        if state.maybe():
             accessories.append('hat')
-        if space.maybe():
+        if state.maybe():
             accessories.append('ring')    
     character = {
         'size': size,
@@ -33,22 +33,20 @@ def generate_character(space: exhaustive.Space):
     return character
 
 # iterates over a space of 132 characters
-for character in exhaustive.iterate(generate_character):
+for character in exhaust.space(generate_character):
     print(character)
 ```
 
-As you can see, navigating the search space works fine within loops as well.
-Each time a function from the `Space` object is called (like `maybe()`), you can think of it as forking the current path into multiple branches, leading to a tree that gets explored. While exploring, the user-defined function is called for each path of the tree.
+As you can see, navigating the space works fine within loops as well.
+Each time a function from the `State` object is called (like `maybe()`), you can think of it as forking the current path into multiple branches, leading to a tree that gets explored. While exploring, the user-defined function is called for each path of the tree.
+
+See the [examples/](examples/) folder for further examples that can be run on the command line.
 
 ## Install
 
 ```
-pip install exhaustive
+pip install exhaust
 ```
-
-## Samples
-
-See the [samples/](samples) folder for scripts that can be run on the command line.
 
 ## Development
 

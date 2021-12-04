@@ -1,13 +1,13 @@
-import exhaustive
+import exhaust
 
 products = {}
 
-def multiply(space: exhaustive.Space):
-    i = space.randint(1, 10)
-    j = space.randint(1, 10)
+def multiply(state: exhaust.State):
+    i = state.randint(1, 10)
+    j = state.randint(1, 10)
     products[(i, j)] = i * j
 
-for _ in exhaustive.iterate(multiply):
+for _ in exhaust.space(multiply):
     pass
 
 for i in range(1, 11):

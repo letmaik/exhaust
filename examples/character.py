@@ -1,19 +1,21 @@
-from pprint import pprint
-import exhaustive
+# This example is from the project README.
 
-def generate_character(space: exhaustive.Space):
+from pprint import pprint
+import exhaust
+
+def generate_character(state: exhaust.State):
     eyes = []
-    for _ in range(space.randint(1, 3)):
+    for _ in range(state.randint(1, 3)):
         eyes.append({
-            'color': space.choice(['brown', 'blue']),
-            'glowing': space.maybe()
+            'color': state.choice(['brown', 'blue']),
+            'glowing': state.maybe()
         })
     size = 'giant' if len(eyes) != 2 else 'normal'
     accessories = []
     if len(eyes) == 2:
-        if space.maybe():
+        if state.maybe():
             accessories.append('hat')
-        if space.maybe():
+        if state.maybe():
             accessories.append('ring')    
     character = {
         'size': size,
@@ -22,5 +24,5 @@ def generate_character(space: exhaustive.Space):
     }
     return character
 
-for character in exhaustive.iterate(generate_character):
+for character in exhaust.space(generate_character):
     pprint(character, sort_dicts=False)

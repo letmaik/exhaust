@@ -1,13 +1,15 @@
-import exhaustive
+# This example shows how to iterate over a grid of parameters.
 
-def generate_combination(space: exhaustive.Space):
+import exhaust
+
+def generate_combination(state: exhaust.State):
     return {
-        'integer': space.randint(1, 5),
-        'bool': space.maybe(),
-        'choice': space.choice([1, None, 'foo', ['bar']])
+        'integer': state.randint(1, 5),
+        'bool': state.maybe(),
+        'choice': state.choice([1, None, 'foo', ['bar']])
     }
 
-for combination in exhaustive.iterate(generate_combination):
+for combination in exhaust.space(generate_combination):
     print(combination)
 
 # Output:
