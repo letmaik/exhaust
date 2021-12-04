@@ -67,8 +67,13 @@ jobs:
         name: wheels
         path: dist
 
-    - name: Install wheel with test dependencies
-      run: pip install dist/*.whl[test]
+    - name: Install wheel
+      run: 
+        ls -al dist
+        pip install dist/*.whl
+
+    - name: Install test dependencies
+      run: pip install -r requirements-test.txt
 
     - name: Run tests
       run: |
@@ -97,7 +102,10 @@ jobs:
 
     - name: Install from wheel
       run: |
-        pip install dist/*.whl[docs]
+        pip install dist/*.whl
+
+    - name: Install documentation dependencies
+      run: pip install -r requirements-docs.txt
 
     - name: Build docs
       run: sphinx-build -b html docs dist-docs

@@ -56,16 +56,18 @@ Requires pip >= 21.3
 
 Editable install:
 ```
-pip install -e .[test,docs]
+pip install -e .
 ```
 
 Run tests:
 ```
+pip install -r requirements-test.txt
 pytest
 ```
 
 Build docs:
 ```
+pip install -r requirements-docs.txt
 sphinx-build -b html docs dist-docs
 ```
 
