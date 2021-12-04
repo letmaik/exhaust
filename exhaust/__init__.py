@@ -1,21 +1,30 @@
 "The exhaust package"
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
+
+from typing import Callable, TypeVar, Iterable, Iterator, Optional, overload
+
 
 class SpaceExhausted(Exception):
     pass
 
+T = TypeVar('T')
+
 class State:
-    def __init__(self, verbose=False):
+    def __init__(self, verbose: bool=False):
         self.verbose = verbose
         self._stack = []
         self._loc = -1
         self._exhausted = False
 
-    def _rewind(self):
+    def _rewind(self) -> None:
         self._loc = -1
 
-    def choice(self, seq):
+    def choice(self, seq: Iterable[T]) -> T:
+        """
+        Return an element from the non-empty sequence seq.
+        If seq is empty, raises IndexError.
+        """
         if self._exhausted:
             raise SpaceExhausted()
         top = len(self._stack) - 1
@@ -26,7 +35,7 @@ class State:
             # Enter a new branch.
             seq = list(seq)
             if len(seq) == 0:
-                raise ValueError('Empty sequence')
+                raise IndexError('Empty sequence')
             self._stack.append(seq)
         else:
             # Check if rest of stack has been exhausted.
@@ -56,19 +65,43 @@ class State:
                 print(f'  {loc}: {branch}')
         return value
 
-    def maybe(self):
+    def maybe(self) -> bool:
+        """
+        Return either True or False.
+        """
         return self.choice([True, False])
-        
-    def randint(self, start, end):
-        return self.choice(range(start, end + 1))
+
+    @overload
+    def randrange(self, stop: int) -> int:
+        """
+        Return an element from range(stop).
+        """
+        ...
+
+    @overload
+    def randrange(self, start: int, stop: int, step: Optional[int]=None) -> int:
+        """
+        Return an element from range(start, stop, step).
+        """
+        ...
+
+    def randrange(self, *args) -> int:
+        return self.choice(range(*args))
+
+    def randint(self, a: int, b: int) -> int:
+        """
+        Return an integer N such that a <= N <= b.
+        Alias for randrange(a, b+1).
+        """
+        return self.choice(range(a, b + 1))
 
 
-class SpaceIterable:
-    def __init__(self, fn, verbose=False):
+class SpaceIterable(Iterable[T]):
+    def __init__(self, fn: Callable[[State], T], verbose: bool=False):
         self.fn = fn
         self.verbose = verbose
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[T]:
         state = State(verbose=self.verbose)
         try:
             while True:
@@ -78,5 +111,10 @@ class SpaceIterable:
             pass
 
 
-def space(fn, verbose=False):
+def space(fn: Callable[[State], T], verbose: bool=False) -> Iterable[T]:
+    """
+    Return an iterable that generates values from fn.
+    """
     return SpaceIterable(fn, verbose=verbose)
+
+__all__ = ['State', 'space']
