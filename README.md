@@ -40,7 +40,7 @@ for character in exhaust.space(generate_character):
 As you can see, navigating the space works fine within loops as well.
 Each time a function from the `State` object is called (like `maybe()`), you can think of it as forking the current path into multiple branches, leading to a tree that gets explored. While exploring, the user-defined function is called for each path of the tree.
 
-See the [examples/](examples/) folder for further examples that can be run on the command line.
+See the [examples/](https://github.com/letmaik/exhaust/tree/main/examples) folder for further examples that can be run on the command line.
 
 See the [API Documentation](https://letmaik.github.io/exhaust) for all available `State` functions.
 
