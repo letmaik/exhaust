@@ -1,6 +1,6 @@
 # exhaustive
 
-A Python library to exhaustively and dynamically iterate a search space.
+A Python library to exhaustively iterate a search space represented by a function.
 
 The API is modelled after Python's [`random`](https://docs.python.org/3/library/random.html) module and should feel familiar. Some additional convenience functions were added to cover common cases, like `maybe()`.
 
@@ -32,7 +32,7 @@ def generate_character(space: exhaustive.Space):
     }
     return character
 
-# iterates over a space of 132 items
+# iterates over a space of 132 characters
 for character in exhaustive.iterate(generate_character):
     print(character)
 ```

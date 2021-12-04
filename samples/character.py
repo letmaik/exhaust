@@ -22,8 +22,5 @@ def generate_character(space: exhaustive.Space):
     }
     return character
 
-i = 0
 for character in exhaustive.iterate(generate_character):
-    i += 1
     pprint(character, sort_dicts=False)
-print(i)
