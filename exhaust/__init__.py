@@ -1,6 +1,6 @@
-"The exhaust package"
+"Exhaustively enumerate a combinatorial space represented by a function"
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 from typing import (
     Callable, TypeVar, Iterable, Iterator,
