@@ -68,9 +68,7 @@ jobs:
         path: dist
 
     - name: Install wheel
-      run: 
-        ls -al dist
-        pip install dist/*.whl
+      run: pip install dist/*.whl
 
     - name: Install test dependencies
       run: pip install -r requirements-test.txt
