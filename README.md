@@ -44,7 +44,7 @@ See the [examples/](examples/) folder for further examples that can be run on th
 
 See the [API Documentation](https://letmaik.github.io/exhaust) for all available `State` functions.
 
-## Install
+## Installation
 
 ```
 pip install exhaust
@@ -54,10 +54,26 @@ pip install exhaust
 
 Requires pip >= 21.3
 
+Editable install:
 ```
 pip install -e .[test,docs]
+```
+
+Run tests:
+```
 pytest
+```
+
+Build docs:
+```
 sphinx-build -b html docs dist-docs
+```
+
+Build wheel:
+
+```
+pip install build
+python -m build --wheel
 ```
 
 ## Acknowledgments

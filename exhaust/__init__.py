@@ -4,7 +4,7 @@ __version__ = "1.0.0"
 
 from typing import (
     Callable, TypeVar, Iterable, Iterator,
-    Sequence, Optional, Union,
+    Sequence, Optional, Union, List,
     overload
 )
 import itertools
@@ -75,7 +75,7 @@ class State:
                 print(f'  {loc}: {branch}')
         return value
 
-    def choices(self, population: Iterable[T], *, k: int=1) -> list[T]:
+    def choices(self, population: Iterable[T], *, k: int=1) -> List[T]:
         """
         Return a ``k`` sized list of elements chosen from the ``population``
         with replacement.
@@ -90,7 +90,7 @@ class State:
         
         return self.choice(_choices(population, k))
 
-    def sample(self, population: Union[Sequence[T], set[T]], k: int) -> list[T]:
+    def sample(self, population: Union[Sequence[T], set[T]], k: int) -> List[T]:
         """
         Return a ``k`` sized list of unique elements chosen from
         the ``population`` sequence or set.
