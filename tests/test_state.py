@@ -52,9 +52,41 @@ def test_sample():
         [1, 2], [1, 3], [2, 3]
     ]
 
+def test_sample_with_counts():
+    def gen(state: exhaust.State):
+        return state.sample([1, 2], k=2, counts=[1, 2])
+    
+    assert list(exhaust.space(gen)) == [
+        [1, 2], [1, 2], [2, 2]
+    ]
+
+def test_sample_with_counts_mismatching_population():
+    def gen(state: exhaust.State):
+        return state.sample([1, 2], k=2, counts=[1, 2, 2])
+    
+    with pytest.raises(ValueError):
+        for _ in exhaust.space(gen):
+            pass
+
+def test_sample_with_counts_totalling_zero():
+    def gen(state: exhaust.State):
+        return state.sample([1, 2], k=2, counts=[0, 0])
+    
+    with pytest.raises(ValueError):
+        for _ in exhaust.space(gen):
+            pass
+
 def test_sample_with_k_larger_than_population_raises():
     def gen(state: exhaust.State):
         state.sample([1, 2, 3], k=4)
+
+    with pytest.raises(ValueError):
+        for _ in exhaust.space(gen):
+            pass
+
+def test_sample_with_k_larger_than_population_with_counts_raises():
+    def gen(state: exhaust.State):
+        state.sample([1, 2, 3], k=5, counts=[1, 2, 1])
 
     with pytest.raises(ValueError):
         for _ in exhaust.space(gen):

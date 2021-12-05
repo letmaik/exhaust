@@ -32,6 +32,8 @@ class State:
         """
         Return an element from the non-empty sequence ``seq``.
 
+        This is the equivalent of :func:`random.choice`.
+
         :param seq: The sequence from which to choose from.
         :raises IndexError: if ``seq`` is empty.
         """
@@ -80,6 +82,9 @@ class State:
         Return a ``k`` sized list of elements chosen from the ``population``
         with replacement.
 
+        This is the equivalent of :func:`random.choices`, minus the
+        ``weights`` and ``cum_weights`` arguments.
+
         :param population: The population from which to choose from.
         :param k: The number of elements to choose.
         :raise IndexError: if ``population`` is empty.
@@ -90,28 +95,48 @@ class State:
         
         return self.choice(_choices(population, k))
 
-    def sample(self, population: Union[Sequence[T], Set[T]], k: int) -> List[T]:
+    def sample(self, population: Sequence[T], k: int, *, counts: Optional[Iterable[int]]=None) -> List[T]:
         """
         Return a ``k`` sized list of unique elements chosen from
-        the ``population`` sequence or set.
+        the ``population``.
+
+        This is the equivalent of :func:`random.sample`.
 
         :param population: The population from which to choose from.
         :param k: The number of elements to choose.
+        :param counts: The number of times each element is repeated.
         :raise ValueError: if ``k`` is larger than the ``population`` size.
         """
-        if len(population) < k:
-            raise ValueError('Sample larger than population or is negative')
+        def _repeated(population, counts):
+            for item, count in zip(population, counts):
+                yield from itertools.repeat(item, count)
 
         def _sample(population, k):
             for tup in itertools.combinations(population, k):
                 yield list(tup)
         
-        return self.choice(_sample(population, k))
+        n = len(population)
+        if counts is not None:
+            counts = list(counts)
+            if len(counts) != n:
+                raise ValueError('The number of counts does not match the population')
+            total = sum(counts)
+            if total <= 0:
+                raise ValueError('Total of counts must be greater than zero')
+            population_ = _repeated(population, counts)
+        else:
+            total = n
+            population_ = population
+
+        if k > total:
+            raise ValueError('Sample larger than population or is negative')
+
+        return self.choice(_sample(population_, k))
 
     def maybe(self) -> bool:
         """
         Return ``True`` or ``False``.
-        Alias for choice([True, False]).
+        Alias for ``choice([True, False])``.
         """
         return self.choice([True, False])
 
@@ -126,7 +151,8 @@ class State:
     def randrange(self, *args) -> int:
         """
         Return an element from ``range(start, stop, step)``.
-        Raises :class:`ValueError` if the range is empty.
+
+        This is the equivalent of :func:`random.randrange`.
 
         :param start: The start of the range.
         :param stop: The end of the range (exclusive).
@@ -141,8 +167,9 @@ class State:
     def randint(self, a: int, b: int) -> int:
         """
         Return an integer ``N`` such that ``a <= N <= b``.
-        Alias for randrange(a, b+1).
-        Raises :class:`ValueError` if the range is empty.
+        Alias for ``randrange(a, b+1)``.
+
+        This is the equivalent of :func:`random.randint`.
 
         :param a: The start of the range.
         :param b: The end of the range (inclusive).
