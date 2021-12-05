@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>API Reference &#8212; exhaust 1.0.2 documentation</title>
+    <title>API Reference &#8212; exhaust 1.1.0 documentation</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -167,6 +167,7 @@ function passed to <a class="reference internal" href="#exhaust.space" title="ex
 <dt class="sig sig-object py" id="exhaust.State.choice">
 <span class="sig-name descname"><span class="pre">choice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#exhaust.State.choice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return an element from the non-empty sequence <code class="docutils literal notranslate"><span class="pre">seq</span></code>.</p>
+<p>This is the equivalent of <a class="reference external" href="https://docs.python.org/3/library/random.html#random.choice" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">random.choice()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>seq</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[~T]) – The sequence from which to choose from.</p>
@@ -185,6 +186,8 @@ function passed to <a class="reference internal" href="#exhaust.space" title="ex
 <span class="sig-name descname"><span class="pre">choices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#exhaust.State.choices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a <code class="docutils literal notranslate"><span class="pre">k</span></code> sized list of elements chosen from the <code class="docutils literal notranslate"><span class="pre">population</span></code>
 with replacement.</p>
+<p>This is the equivalent of <a class="reference external" href="https://docs.python.org/3/library/random.html#random.choices" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">random.choices()</span></code></a>, minus the
+<code class="docutils literal notranslate"><span class="pre">weights</span></code> and <code class="docutils literal notranslate"><span class="pre">cum_weights</span></code> arguments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -205,7 +208,7 @@ with replacement.</p>
 <dt class="sig sig-object py" id="exhaust.State.maybe">
 <span class="sig-name descname"><span class="pre">maybe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#exhaust.State.maybe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>.
-Alias for choice([True, False]).</p>
+Alias for <code class="docutils literal notranslate"><span class="pre">choice([True,</span> <span class="pre">False])</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
@@ -217,8 +220,8 @@ Alias for choice([True, False]).</p>
 <dt class="sig sig-object py" id="exhaust.State.randint">
 <span class="sig-name descname"><span class="pre">randint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#exhaust.State.randint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return an integer <code class="docutils literal notranslate"><span class="pre">N</span></code> such that <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;=</span> <span class="pre">N</span> <span class="pre">&lt;=</span> <span class="pre">b</span></code>.
-Alias for randrange(a, b+1).
-Raises <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a> if the range is empty.</p>
+Alias for <code class="docutils literal notranslate"><span class="pre">randrange(a,</span> <span class="pre">b+1)</span></code>.</p>
+<p>This is the equivalent of <a class="reference external" href="https://docs.python.org/3/library/random.html#random.randint" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">random.randint()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -240,8 +243,8 @@ Raises <a class="reference external" href="https://docs.python.org/3/library/exc
 <span class="sig-name descname"><span class="pre">randrange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#exhaust.State.randrange" title="Permalink to this definition">¶</a></dt>
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">randrange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span></dt>
-<dd><p>Return an element from <code class="docutils literal notranslate"><span class="pre">range(start,</span> <span class="pre">stop,</span> <span class="pre">step)</span></code>.
-Raises <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a> if the range is empty.</p>
+<dd><p>Return an element from <code class="docutils literal notranslate"><span class="pre">range(start,</span> <span class="pre">stop,</span> <span class="pre">step)</span></code>.</p>
+<p>This is the equivalent of <a class="reference external" href="https://docs.python.org/3/library/random.html#random.randrange" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">random.randrange()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -261,14 +264,16 @@ Raises <a class="reference external" href="https://docs.python.org/3/library/exc
 
 <dl class="py method">
 <dt class="sig sig-object py" id="exhaust.State.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#exhaust.State.sample" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#exhaust.State.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a <code class="docutils literal notranslate"><span class="pre">k</span></code> sized list of unique elements chosen from
-the <code class="docutils literal notranslate"><span class="pre">population</span></code> sequence or set.</p>
+the <code class="docutils literal notranslate"><span class="pre">population</span></code>.</p>
+<p>This is the equivalent of <a class="reference external" href="https://docs.python.org/3/library/random.html#random.sample" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">random.sample()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>population</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[~T], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Set" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code></a>[~T]]) – The population from which to choose from.</p></li>
+<li><p><strong>population</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[~T]) – The population from which to choose from.</p></li>
 <li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – The number of elements to choose.</p></li>
+<li><p><strong>counts</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – The number of times each element is repeated.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
