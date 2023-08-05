@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "exhaust"
-authors = [{name = "Maik Riechert", email = "maik.riechert@arcor.de"}]
+authors = [{name = "Maik Riechert"}]
 readme = "README.md"
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
